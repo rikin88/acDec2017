@@ -1,0 +1,104 @@
+Virtual Machine Setup instructions for installing Java8, ElasticSearch and Kibana
+
+from the start:
+
+sudo apt-get update
+
+//install the oracle jdk
+sudo apt-get install software-properties-common
+sudo add-apt-repository "deb http://ppa.launchpad.net/webupd8team/java/ubuntu xenial main"
+sudo apt-get update
+sudo apt-get install oracle-java8-installer
+java -version
+sudo update-alternatives --config java
+
+//setup java home
+sudo nano /etc/environment
+JAVA_HOME="/usr/lib/jvm/java-8-oracle/jre/bin/java" -- change the home location
+source /etc/environment
+echo $JAVA_HOME
+
+
+//install elasticsearch
+
+wget -qO - https://artifacts.elastic.co/GPG-KEY-elasticsearch | sudo apt-key add -
+sudo apt-get install apt-transport-https
+echo "deb https://artifacts.elastic.co/packages/5.x/apt stable main" | sudo tee -a /etc/apt/sources.list.d/elastic-5.x.list
+sudo apt-get update && sudo apt-get install elasticsearch
+
+//check elasticsearch yml
+sudo nano /etc/elasticsearch/elasticsearch.yml
+update network.host to 0.0.0.0
+
+//check systemd
+ps -p 1 -- to check if its systemd
+sudo /bin/systemctl daemon-reload
+sudo /bin/systemctl enable elasticsearch.service
+sudo systemctl start elasticsearch.service
+sudo systemctl stop elasticsearch.service
+
+//check logs
+sudo ls -ltr /var/logs/elasticsearch
+sudo cat /var/logs/elasticsearch/elasticsearch.log
+
+//give CURL command
+curl -XGET 'localhost:9200/?pretty'
+
+check reference here for debian installation of elasticsearch:
+https://www.elastic.co/guide/en/elasticsearch/reference/current/deb.html
+
+
+
+//install kibana
+wget -qO - https://artifacts.elastic.co/GPG-KEY-elasticsearch | sudo apt-key add -
+sudo apt-get install apt-transport-https
+echo "deb https://artifacts.elastic.co/packages/5.x/apt stable main" | sudo tee -a /etc/apt/sources.list.d/elastic-5.x.list
+sudo apt-get update && sudo apt-get install kibana
+
+//update kibana.yml
+sudo nano /etc/kibana/kibana.yml
+
+ps -p 1
+sudo /bin/systemctl daemon-reload
+sudo /bin/systemctl enable kibana.service
+
+sudo systemctl start kibana.service
+sudo systemctl stop kibana.service
+
+//installing jq
+sudo apt-get install jq
+
+
+//Node installation instructions
+cd ~
+curl -sL https://deb.nodesource.com/setup_7.x -o nodesource_setup.sh
+sudo bash nodesource_setup.sh
+sudo apt-get install nodejs
+sudo apt-get install build-essential
+sudo apt-get install unzip
+
+//install git
+sudo apt-get install git-core
+git config --global user.name "rikin88"
+git config --global user.email rikin.asher@gmail.com
+
+
+
+********************************
+Useful links for setup:
+
+Java 8 Setup instructions:
+https://www.digitalocean.com/community/tutorials/how-to-install-java-with-apt-get-on-debian-8
+
+Elasticsearch Setup:
+https://www.elastic.co/guide/en/elasticsearch/reference/current/deb.html
+
+Kibana setup:;
+https://www.elastic.co/guide/en/kibana/current/deb.html
+
+Node setup:
+https://www.digitalocean.com/community/tutorials/how-to-install-node-js-on-debian-8
+
+Setting up a cluster:
+https://devopscube.com/how-to-setup-an-elasticsearch-cluster/
+

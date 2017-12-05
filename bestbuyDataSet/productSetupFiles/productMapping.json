@@ -1,0 +1,53 @@
+{
+	"mappings": {
+		"product": {
+			"properties": {
+				"sku": {
+					"type":"integer",
+					"null_value":0
+				},
+				"name": {
+					"type":"string"
+				},
+				"type": {
+					"type":"string"
+				},
+				"price": {
+					"type":"double"
+				},
+				"upc": {
+					"type":"string"
+				},
+				"category" : {
+		          "type": "nested",
+		          "properties" : {
+		          	"id": {
+		          		"type":"string"
+		          	},
+		            "name" : {
+		             	"type":"string"
+		            }
+		          }
+		        },
+		        "shipping": {
+		        	"type":"double"
+		        },
+		        "description": {
+		        	"type":"string"
+		        },
+		        "manufacturer": {
+		        	"type":"string"
+		        },
+		        "model": {
+		        	"type":"string"
+		        },
+		        "url": {
+		        	"type":"string"
+		        },
+		        "image": {
+		        	"type":"string"
+		        }
+			}
+		}
+	}
+}

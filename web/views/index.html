@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Bestbuy Product Set Example</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.2/css/bootstrap-responsive.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.css" />
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-3-typeahead/4.0.2/bootstrap3-typeahead.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.js"></script>
+        <script>
+            $( function() {
+                $('#typeahead').typeahead({
+                    limit: 15,
+                    updater: function(result) {
+                        $('#productDetails').text(result);
+                        return result;
+                    },
+                    source: function(query, process) {
+                        products=[];
+                        map={};
+
+                        $.ajax( {
+                            url: '/api/Search?',
+                            type: 'GET',
+                            data: 'product=' + query,
+                            dataTpe: 'JSON',
+                            async: true,
+                            success: function(data) {
+                                var temp = JSON.parse(data);
+                                //console.log(temp.products[0].id);
+                                console.log("Temp is " + temp.products.length);
+                                var results = [];
+                                $.map(temp.products, function(product) {
+                                    results.push(product.name);
+                                });
+
+                                process(results);
+                            }
+                        });   
+                    }
+                });
+            });
+        </script>
+    </head>
+
+    
+    <body>
+        <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Bestbuy Product Search</a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="#">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#contact">Contact</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+        <!--<h1>Bestbuy Product Search</h1><br> -->
+        <div>
+                <label for="selectProduct">Select a product:    </label><br>
+                <input type="text" class="span5" id="typeahead" data-provide="typeahead" />
+            </div>
+        <div>
+            <label id="productDetails"></label>
+        </div>
+        
+    </body>
+</html>
