@@ -21,6 +21,7 @@
                     limit: 15,
                     updater: function(result) {
                         $('#productDetails').text(result);
+
                         return result;
                     },
                     source: function(query, process) {
@@ -36,12 +37,19 @@
                             success: function(data) {
                                 var temp = JSON.parse(data);
                                 //console.log(temp.products[0].id);
-                                console.log("Temp is " + temp.products.length);
+                                //console.log("Product list length " + temp.products.length);
                                 var results = [];
                                 $.map(temp.products, function(product) {
-                                    results.push(product.name);
+                                    var item = {
+                                        "name" : product.name,
+                                        "id" : product.id
+                                    };
+                                    console.log(item.id);
+                                    //results.push(product.name);
+                                    results.push(item.name);
                                 });
 
+                                console.log("result size: " + results.length);
                                 process(results);
                             }
                         });   

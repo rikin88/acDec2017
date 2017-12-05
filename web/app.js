@@ -46,16 +46,55 @@ myRouter.route('/Search')
 				    });
 				    result= result.substring(0, result.length - 1); 
 				    var resultString = '{ "products" : [' + result + ' ]}';
-				    //var resultString = '[' + result + ']';
-						//var resultString= '{ ' + result + ' }';
-						//var resultString = result;
-				    //console.log("Result String is : " + resultString);
 				    res.json(resultString);
 			    }
 			});
 	});
 
 //http://localhost:8000/api/Search?&product=dura
+
+/* new stuff */
+
+myRouter.route('/SearchDetails')
+	.get(function(req,res) {
+
+		var query = {};
+		if(req.query.productName) {
+			query.productName = req.query.productName;
+		}
+
+		var result = "";
+
+		esClient.search({  
+  			index: 'productlist',
+  			type: 'product',
+				body: {
+			    	size: 1,
+			    	query : {
+			    		match_phrase: {
+			    			name: {
+			    				query: query.productName,
+			    			}
+			    		}
+			    	}
+				}
+			} , function (error, response, status) {
+			    if (error){
+			      console.log("search error: "+error)
+			    }
+			    else {
+
+			    	var item = response.hits.hits[0];
+			    	if(item!=null && response.hits.hits.length==1) {
+			    		res.json(item);
+			    	}
+			    }
+			});
+	});
+
+/* end of new stuff */
+
+
 app.use('/api', myRouter);
 
 
