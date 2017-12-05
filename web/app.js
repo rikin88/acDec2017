@@ -5,6 +5,7 @@ var port = process.env.PORT || 3000;
 var path = require('path');
 app.use(express.static(__dirname + '/css'));
 app.use(express.static(__dirname + '/js'));
+app.use(express.static(__dirname + '/css/lumen'));
 
 var viewPath = '/views/';
 var myRouter = express.Router();

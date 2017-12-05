@@ -10,18 +10,49 @@
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.2/css/bootstrap-responsive.css" />
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.css" />
+        <!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.css" />-->
+        <link rel="stylesheet" href="lumen_bootstrap.min.css" />
         
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-3-typeahead/4.0.2/bootstrap3-typeahead.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.js"></script>
+        <script src="searchDetails.js"></script>
+        <script src="searchAllProducts.js"></script>
         <script>
+            /*
+            function searchDetailItem(productName) {
+                var decodedProductName = decodeURI(productName);
+                alert('decodedProduct name ' + decodedProductName);
+
+                $.ajax({
+                    type: "GET",
+                    url: "/api/SearchDetails?",
+                    timeout: 2000,
+                    dataType: 'JSON',
+                    data: 'productName=' + decodedProductName, 
+                    success: function(data) {
+                        //show content
+                        //var content = JSON.parse(data);
+                        var content=data;
+                        console.log('content: ' + content);
+                        alert('content : ' + content._source.name);
+                    },
+                    error: function(jqXHR, textStatus, err) {
+                        //show error message
+                        alert('text status '+textStatus+', err '+err)
+                    }
+                });
+            }
+            */
+            //main typeahead function
+            /*
             $( function() {
                 $('#typeahead').typeahead({
                     limit: 15,
                     updater: function(result) {
                         $('#productDetails').text(result);
 
+                        searchDetailItem(result);
                         return result;
                     },
                     source: function(query, process) {
@@ -32,7 +63,7 @@
                             url: '/api/Search?',
                             type: 'GET',
                             data: 'product=' + query,
-                            dataTpe: 'JSON',
+                            dataType: 'JSON',
                             async: true,
                             success: function(data) {
                                 var temp = JSON.parse(data);
@@ -55,7 +86,7 @@
                         });   
                     }
                 });
-            });
+            });*/
         </script>
     </head>
 
@@ -68,10 +99,36 @@
                 <span class="input-group-addon">Product Name</span>
                 <input id="typeahead" class="form-control" type="text" data-provide="typeahead" placeholder="Enter product name">
             </div>
+        <!--
+            <div class="col-md-6 text-center">
+                <div class="panel panel-primary">
+                    <div class="panel panel-heading">
+                        Product Details:
+                    </div>
+                    <div class="panel panel-body">
+                        <label id="productName"></label><br/>
+                        <label id="productPrice"></label> <br/>
+                        <label id="productDescription"></label><br/>
+                    </div>
+                </div>
+            </div>
+        -->
+            <div class="card text-white bg-primary mb-3 col-md-offset-4" style="max-width: 20rem;">
+              <div class="card-header" id="productName">Product Name</div>
+              <div class="card-body">
+                <h4 class="card-title">Product Details</h4>
+                <p class="card-text" id="productDescription"></p><br/>
+              </div>
+            </div>
+            <!--
             <div>
                 <br>
-                <label id="productDetails"></label>
+                <table>
+                    <td>Product Name:</td><td><label id="productName"></label></td>
+                    <td>Product Price</td><td><label id="productPrice"></label></td>
+                    <td>Product Description</td><td><label id="productDescription"></label>
             </div>
+            -->
         </div>
     </body>
 </html>
