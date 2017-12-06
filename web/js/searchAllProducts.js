@@ -19,9 +19,8 @@ $( function() {
                 dataType: 'JSON',
                 async: true,
                 success: function(data) {
+                    
                     var temp = JSON.parse(data);
-                    //console.log(temp.products[0].id);
-                    //console.log("Product list length " + temp.products.length);
                     var results = [];
                     $.map(temp.products, function(product) {
                         var item = {
