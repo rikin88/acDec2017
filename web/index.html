@@ -18,76 +18,7 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.js"></script>
         <script src="searchDetails.js"></script>
         <script src="searchAllProducts.js"></script>
-        <script>
-            /*
-            function searchDetailItem(productName) {
-                var decodedProductName = decodeURI(productName);
-                alert('decodedProduct name ' + decodedProductName);
 
-                $.ajax({
-                    type: "GET",
-                    url: "/api/SearchDetails?",
-                    timeout: 2000,
-                    dataType: 'JSON',
-                    data: 'productName=' + decodedProductName, 
-                    success: function(data) {
-                        //show content
-                        //var content = JSON.parse(data);
-                        var content=data;
-                        console.log('content: ' + content);
-                        alert('content : ' + content._source.name);
-                    },
-                    error: function(jqXHR, textStatus, err) {
-                        //show error message
-                        alert('text status '+textStatus+', err '+err)
-                    }
-                });
-            }
-            */
-            //main typeahead function
-            /*
-            $( function() {
-                $('#typeahead').typeahead({
-                    limit: 15,
-                    updater: function(result) {
-                        $('#productDetails').text(result);
-
-                        searchDetailItem(result);
-                        return result;
-                    },
-                    source: function(query, process) {
-                        products=[];
-                        map={};
-
-                        $.ajax( {
-                            url: '/api/Search?',
-                            type: 'GET',
-                            data: 'product=' + query,
-                            dataType: 'JSON',
-                            async: true,
-                            success: function(data) {
-                                var temp = JSON.parse(data);
-                                //console.log(temp.products[0].id);
-                                //console.log("Product list length " + temp.products.length);
-                                var results = [];
-                                $.map(temp.products, function(product) {
-                                    var item = {
-                                        "name" : product.name,
-                                        "id" : product.id
-                                    };
-                                    console.log(item.id);
-                                    //results.push(product.name);
-                                    results.push(item.name);
-                                });
-
-                                console.log("result size: " + results.length);
-                                process(results);
-                            }
-                        });   
-                    }
-                });
-            });*/
-        </script>
     </head>
 
     
@@ -113,11 +44,15 @@
                 </div>
             </div>
         -->
-            <div class="card text-white bg-primary mb-3 col-md-offset-4" style="max-width: 20rem;">
+            <div></div>
+
+            <div id="card" class="mt-2 card text-white bg-primary mb-3 col-md-offset-4">
               <div class="card-header" id="productName">Product Name</div>
               <div class="card-body">
                 <h4 class="card-title">Product Details</h4>
-                <p class="card-text" id="productDescription"></p><br/>
+                  <label id="productDescriptionLbl">Description</label> <p class="card-text" id="productDescription"></p><br/>
+                  <label id="productPriceLbl">Price</label> <p class="card-text" id="productPrice"></p><br/>
+                  <img class="card-text"id="productImage" />
               </div>
             </div>
             <!--
